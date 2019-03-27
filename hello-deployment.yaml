@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boothello-deployment
+  labels:
+    app: boothello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: boothello
+  template:
+    metadata:
+      labels:
+        app: boothello
+    spec:
+      containers:
+      - name: boothello
+        #if you have the image locally, just can use
+        #image: boothello
+        image: sabram/boothello:latest
+        ports:
+        - containerPort: 8080

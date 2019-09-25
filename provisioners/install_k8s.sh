@@ -4,6 +4,6 @@ sudo apt install -y mc ansible
 mkdir /home/vagrant/k8s
 cd /home/vagrant/k8s
 git clone https://github.com/alexkonkin/k8s-ubuntu.git .
-git checkuot k8s_v.16_vagrant
+git checkout k8s_v.16_vagrant
 ansible-playbook playbook.yml
 

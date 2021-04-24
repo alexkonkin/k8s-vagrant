@@ -9,7 +9,14 @@ $info = <<-SCRIPT
   echo "1. Install Kubernetes version 1.19.00"
   echo "   execute a command:"
   echo "   vagrant up km1 --provision --provision-with k8s_1.19"
-  
+  echo " "
+  echo "   To get an access to Kubernetes Dashboard run the command:"
+  echo "   sudo kubectl proxy --address='0.0.0.0' --disable-filter=true&"
+  echo " "
+  echo "   To get a tocken to login to Kubernetes Dashboard run the command:"
+  echo "   kubectl -n kube-system describe secret \\$(kubectl -n kube-system get secret | grep admin-user | awk '{print \\$1}')"
+  echo " "
+
 SCRIPT
 
 
@@ -34,20 +41,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     km1.vm.network "forwarded_port", guest: 8001, host: 8888
 
     config.vm.provision "info", type: "shell", run: "always" do |shell|
-      shell.inline = $info
+        shell.inline = $info
     end
-
-   config.vm.provision "k8s_1.19", type: "shell", run: "never" do |shell|
-     shell.path = 'provisioners/install_k8s.sh'
-     shell.privileged = false
-     shell.args = ["1.19.0-00"]
+	
+    config.vm.provision "k8s_1.19", type: "shell", run: "never" do |shell|
+        shell.path = 'provisioners/install_k8s.sh'
+        shell.privileged = false
+		shell.args = ["1.19.0-00"]
     end
-					 
    end
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "2024"]
     vb.customize ["modifyvm", :id, "--cpus", "2"]
   end
-  
 end

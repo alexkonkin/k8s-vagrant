@@ -31,17 +31,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     km1.vm.box = "bento/ubuntu-16.04"
     km1.vm.hostname = "c1-master1"
     km1.vm.network :private_network, ip: "172.16.94.10"
-	km1.vm.network "forwarded_port", guest: 8001, host: 8888
+    km1.vm.network "forwarded_port", guest: 8001, host: 8888
 
-	config.vm.provision "info", type: "shell", run: "always" do |shell|
-        shell.inline = $info
+    config.vm.provision "info", type: "shell", run: "always" do |shell|
+      shell.inline = $info
     end
 
-	
-	config.vm.provision "k8s_1.19", type: "shell", run: "never" do |shell|
-        shell.path = 'provisioners/install_k8s.sh'
-        shell.privileged = false
-		shell.args = ["1.19.0-00"]
+   config.vm.provision "k8s_1.19", type: "shell", run: "never" do |shell|
+     shell.path = 'provisioners/install_k8s.sh'
+     shell.privileged = false
+     shell.args = ["1.19.0-00"]
     end
 					 
    end

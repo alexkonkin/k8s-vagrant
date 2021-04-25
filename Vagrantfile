@@ -14,7 +14,7 @@ $info = <<-SCRIPT
   echo "   sudo kubectl proxy --address='0.0.0.0' --disable-filter=true&"
   echo " "
   echo "   To get a tocken to login to Kubernetes Dashboard run the command:"
-  echo "   kubectl -n kube-system describe secret \\$(kubectl -n kube-system get secret | grep admin-user | awk '{print \\$1}')"
+  echo "   kubectl -n kubernetes-dashboard get secret \\$(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath='"'{.secrets[0].name}'"') -o go-template='"'{{.data.token | base64decode}}'"'"
   echo " "
 
 SCRIPT
